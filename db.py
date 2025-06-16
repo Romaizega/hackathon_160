@@ -1,7 +1,6 @@
 import sqlite3
 from datetime import datetime
 
-today = datetime.today().strftime('%Y%m%d')
 
 con = sqlite3.connect("db.sqlite")
 
@@ -19,6 +18,7 @@ cur.execute(query_1)
 con.close()
 
 def add_task(description):
+    today = datetime.today().strftime('%Y%m%d')
     con = sqlite3.connect("db.sqlite")
     cur = con.cursor()
     query_add = '''
@@ -59,4 +59,12 @@ def mark_done(task_id):
     con.commit()
     con.close()
 
-add_task("Drink a cup of tea")
+def delete_all():
+    # USE only for tests
+    con = sqlite3.connect("db.sqlite")
+    cur = con.cursor()
+    cur.execute('''
+        DROP TABLE tasks
+''')
+    con.commit()
+    con.close()
