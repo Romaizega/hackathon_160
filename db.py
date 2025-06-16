@@ -1,4 +1,7 @@
 import sqlite3
+from datetime import datetime
+
+today = datetime.today().strftime('%Y%m%d')
 
 con = sqlite3.connect("db.sqlite")
 
@@ -15,13 +18,13 @@ CREATE TABLE IF NOT EXISTS tasks (
 cur.execute(query_1)
 con.close()
 
-def add_task(description, date):
+def add_task(description):
     con = sqlite3.connect("db.sqlite")
     cur = con.cursor()
     query_add = '''
         INSERT INTO tasks(description, date, done) VALUES (?, ?, ?)'''
     
-    cur.execute(query_add, (description, date, 0))
+    cur.execute(query_add, (description, today, 0))
     con.commit()
     con.close()
 
@@ -55,3 +58,5 @@ def mark_done(task_id):
     ''', (task_id,))
     con.commit()
     con.close()
+
+add_task("Drink a cup of tea")
