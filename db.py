@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+from tabulate import tabulate
 
 
 con = sqlite3.connect("db.sqlite")
@@ -37,8 +38,17 @@ def get_all_tasks():
     ''')
     results = cur.fetchall()
     con.close()
-    for result in results:
-        print(result)
+    if not results:
+        print("No tasks found")
+    
+    table = []
+    for row in results:
+        id, desc, date, done = row
+        formatted_date = datetime.strptime(str(date), '%Y%m%d').strftime('%Y-%m-%d')
+        status = "✅" if done else "❌"
+        table.append([id, desc, formatted_date, status])
+
+    print(tabulate(table, headers=["ID", "Description", "Date", "Done"], tablefmt="fancy_grid")) 
 
 
 def delete_task(task_id):

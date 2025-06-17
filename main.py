@@ -1,38 +1,42 @@
 from db import add_task, get_all_tasks, delete_task, mark_done
+from weather import get_weather
 
 
 def get_user_menu_choise():
 
     print ("""====== TODO LIST ======
-        1. Add a task
-        2. Show all tasks
-        3. Mark the task as done
-        4. Delete the task
-        5. Exit
+        1. Show the weather
+        2. Add a task
+        3. Show all tasks
+        4. Mark the task as done
+        5. Delete the task
+        6. Exit
     """)
     while True:
         try:
             user_input = int(input("Please eneter your choice: "))
-            if user_input not in range(1, 6):
+            if user_input not in range(1, 7):
                 print("Wrong number, try again")
                 continue
-        except:
+        except ValueError:
             print("Write onle a number")
             continue
         if user_input == 1:
+            get_weather()
+        if user_input == 2:
             new_task = input("Write your new task: ")
             add_task(new_task)
             print(f"Yor  taks: {new_task} added")
             get_all_tasks()
-        elif user_input == 2:
-            get_all_tasks()
         elif user_input == 3:
+            get_all_tasks()
+        elif user_input == 4:
             task_id = int(input("Enter task id for mark: "))
             mark_done(task_id)
-        elif user_input == 4:
+        elif user_input == 5:
             delete_id = int(input("Write task id for delete task: "))
             delete_task(delete_id)
-        elif user_input == 5:
+        elif user_input == 6:
             print("Goodbye")
             break
         
