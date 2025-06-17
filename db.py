@@ -77,3 +77,13 @@ def delete_all():
         DROP TABLE tasks
 ''')
     con.commit()
+
+def get_task_description(task_id):
+    con = sqlite3.connect("db.sqlite")
+    cur = con.cursor()
+    cur.execute('''
+    SELECT description FROM tasks WHERE id = ? 
+    ''', (task_id,))
+    result = cur.fetchone()
+    con.close()
+    return result[0] if result else None
