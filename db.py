@@ -67,4 +67,3 @@ def delete_all():
         DROP TABLE tasks
 ''')
     con.commit()
-    con.close()
