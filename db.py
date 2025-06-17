@@ -69,14 +69,6 @@ def mark_done(task_id):
     con.commit()
     con.close()
 
-def delete_all():
-    # USE only for tests
-    con = sqlite3.connect("db.sqlite")
-    cur = con.cursor()
-    cur.execute('''
-        DROP TABLE tasks
-''')
-    con.commit()
 
 def get_task_description(task_id):
     con = sqlite3.connect("db.sqlite")
@@ -87,3 +79,29 @@ def get_task_description(task_id):
     result = cur.fetchone()
     con.close()
     return result[0] if result else None
+
+def get_unmark_task():
+    con = sqlite3.connect("db.sqlite")
+    cur = con.cursor()
+    cur.execute('''
+    SELECT id, description FROM tasks WHERE done = 0 ORDER BY date 
+    ''')
+    un_tasks = cur.fetchall()
+    con.close()
+    if not un_tasks:
+        return None
+    table = []
+    for id, desc in un_tasks:
+        table.append([id, desc])
+    return tabulate(table, headers=["ID", "Task"], tablefmt="fancy_grid")
+
+    
+
+def delete_all():
+    # USE only for tests
+    con = sqlite3.connect("db.sqlite")
+    cur = con.cursor()
+    cur.execute('''
+        DROP TABLE tasks
+''')
+    con.commit()
