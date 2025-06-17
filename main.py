@@ -16,26 +16,39 @@ def get_user_menu_choise():
         try:
             user_input = int(input("Please eneter your choice: "))
             if user_input not in range(1, 7):
-                print("Wrong number, try again")
+                print("⚠️ Wrong number, try again")
                 continue
         except ValueError:
-            print("Write onle a number")
+            print("⚠️ Please enter a number only")
             continue
         if user_input == 1:
             get_weather()
         if user_input == 2:
-            new_task = input("Write your new task: ")
-            add_task(new_task)
-            print(f"Yor  taks: {new_task} added")
-            get_all_tasks()
+            new_task = input("Write your new task: ").strip()
+            if new_task:
+                add_task(new_task)
+                print(f"Your  task: {new_task} added")
+                get_all_tasks()
+            else:
+                print("Task cannot be empty!")
         elif user_input == 3:
             get_all_tasks()
         elif user_input == 4:
-            task_id = int(input("Enter task id for mark: "))
-            mark_done(task_id)
+            try:
+                task_id = int(input("Enter task id for mark: "))
+                mark_done(task_id)
+                print(f"Your {task_id} marked as ✅")
+                get_all_tasks()
+            except ValueError:
+                print("Please enter a valid task ID")
         elif user_input == 5:
-            delete_id = int(input("Write task id for delete task: "))
-            delete_task(delete_id)
+            try:
+                delete_id = int(input("Write task id for delete task: "))
+                delete_task(delete_id)
+                print(f"Your {delete_id}  deleted")
+                get_all_tasks()
+            except ValueError:
+                print("Please enter a valid task ID")
         elif user_input == 6:
             print("Goodbye")
             break
