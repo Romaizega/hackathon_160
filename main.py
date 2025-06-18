@@ -1,4 +1,4 @@
-from db import add_task, get_all_tasks, delete_task, mark_done, get_task_description, get_unmark_task, edit_task
+from db import add_task, get_all_tasks, delete_task, mark_done, get_task_description, get_unmark_task, edit_task, generate_fake_tasks
 from weather import get_weather
 from money import get_money
 from datetime import datetime
@@ -23,6 +23,7 @@ def get_user_menu_choise():
 
     print(f"Today: {date_now.strftime('%Y-%m-%d %H:%M:%S')}\n")
     print ("""=========== TODO LIST ===========
+        0. Fill the table
         1. Show the weather 🌦️
         2. Show currency 💱
         3. Show all tasks 📋
@@ -35,7 +36,7 @@ def get_user_menu_choise():
     while True:
         try:
             user_input = int(input("Please enter your choice: "))
-            if user_input not in range(1, 9):
+            if user_input not in range(0, 9):
                 print(" Wrong number, try again")
                 continue
         except ValueError:
@@ -43,7 +44,12 @@ def get_user_menu_choise():
             print_menu()
             continue
         
-        if user_input == 1:
+        if user_input == 0:
+            generate_fake_tasks(1)
+            get_all_tasks()
+            print_menu()
+
+        elif user_input == 1:
             get_weather()
             print_menu()
         
