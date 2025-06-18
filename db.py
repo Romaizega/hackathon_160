@@ -1,10 +1,11 @@
 import sqlite3
 from datetime import datetime
 from tabulate import tabulate
+from faker import Faker
 
 
+fake = Faker()
 con = sqlite3.connect("db.sqlite")
-
 cur = con.cursor()
 
 query_1 = '''
@@ -104,6 +105,11 @@ def edit_task(task_id, new_description):
     con.commit()
     con.close()
 
+def generate_fake_tasks(count):
+    for _ in range(count):
+        tasks = fake.sentence(nb_words = 5)
+        add_task(tasks)
+
 def delete_all():
     # USE only for tests
     con = sqlite3.connect("db.sqlite")
@@ -112,3 +118,4 @@ def delete_all():
         DROP TABLE tasks
 ''')
     con.commit()
+delete_all()
