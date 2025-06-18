@@ -47,7 +47,7 @@ def get_user_menu_choise():
         
         if user_input == 0:
             try:
-                count_sent = int(input("How many sentences do you want to create: "))
+                count_sent = int(input("How many tasks do you want to create: "))
                 if 1 <= count_sent <= 50:
                     generate_fake_tasks(count_sent)
                     get_all_tasks()
