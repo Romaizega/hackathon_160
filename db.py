@@ -125,4 +125,3 @@ def delete_all():
         DROP TABLE tasks
 ''')
     con.commit()
-delete_all()
