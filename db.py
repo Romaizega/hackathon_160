@@ -95,7 +95,14 @@ def get_unmark_task():
         table.append([id, desc])
     return tabulate(table, headers=["ID", "Task"], tablefmt="fancy_grid")
 
-    
+def edit_task(task_id, new_description):
+    con = sqlite3.connect("db.sqlite")
+    cur = con.cursor()
+    cur.execute('''
+    UPDATE tasks SET description = ? WHERE id = ?
+    ''', (new_description, task_id))
+    con.commit()
+    con.close()
 
 def delete_all():
     # USE only for tests
