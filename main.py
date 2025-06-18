@@ -6,7 +6,8 @@ from datetime import datetime
 
 
 def print_menu():
-    print ("""MENU
+    print ("""MENU:
+        0. Fill in the table
         1. Show the weather
         2. Show currency
         3. Show all tasks
@@ -23,7 +24,7 @@ def get_user_menu_choise():
 
     print(f"Today: {date_now.strftime('%Y-%m-%d %H:%M:%S')}\n")
     print ("""=========== TODO LIST ===========
-        0. Fill the table
+        0. Fill in the table
         1. Show the weather 🌦️
         2. Show currency 💱
         3. Show all tasks 📋
@@ -45,9 +46,17 @@ def get_user_menu_choise():
             continue
         
         if user_input == 0:
-            generate_fake_tasks(1)
-            get_all_tasks()
-            print_menu()
+            try:
+                count_sent = int(input("How many sentences do you want to create: "))
+                if 1 <= count_sent <= 50:
+                    generate_fake_tasks(count_sent)
+                    get_all_tasks()
+                    print_menu()
+                else:
+                    print("You can generate between 1 and 50 tasks")
+                    print_menu()
+            except ValueError:
+                print("Enter a valid number")
 
         elif user_input == 1:
             get_weather()
