@@ -1,5 +1,20 @@
 # HACKATHON TODO LIST
 
+A simple command-line TODO application written in Python.
+
+This app allows you to manage your tasks, check the current weather, view currency exchange rates, and even generate fake tasks for testing or demos.
+
+---
+
+## 🚀 Features
+
+- 📋 Add, view, edit, and delete tasks
+- ✅ Mark tasks as completed
+- 🌦️ View current weather (OpenWeather API)
+- 💱 Check exchange rates for USD/EUR/ILS (ExchangeRate API)
+- 🧪 Generate fake tasks using `Faker`
+- 🗂 Save data to SQLite database
+
 ### Recommendations for deploying the project locally
 
 Clone project
