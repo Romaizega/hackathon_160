@@ -31,26 +31,29 @@ def add_task(description):
     con.close()
 
 def get_all_tasks():
-    con = sqlite3.connect("db.sqlite")
-    cur = con.cursor()
-    cur.execute ('''
-        SELECT*
-        FROM tasks ;
-    ''')
-    results = cur.fetchall()
-    con.close()
-    if not results:
-        print("No tasks found")
-    
-    table = []
-    for row in results:
-        id, desc, date, done = row
-        formatted_date = datetime.strptime(str(date), '%Y%m%d').strftime('%Y-%m-%d')
-        status = "✅" if done else "❌"
-        table.append([id, desc, formatted_date, status])
+    try:
+        con = sqlite3.connect("db.sqlite")
+        cur = con.cursor()
+        cur.execute ('''
+            SELECT*
+            FROM tasks ;
+        ''')
+        results = cur.fetchall()
+        con.close()
+        if not results:
+            print("No tasks found")
+        
+        table = []
+        for row in results:
+            id, desc, date, done = row
+            formatted_date = datetime.strptime(str(date), '%Y%m%d').strftime('%Y-%m-%d')
+            status = "✅" if done else "❌"
+            table.append([id, desc, formatted_date, status])
 
-    print(tabulate(table, headers=["ID", "Description", "Date", "Done"], tablefmt="fancy_grid")) 
-
+        print(tabulate(table, headers=["ID", "Description", "Date", "Done"], tablefmt="fancy_grid"))
+    except  sqlite3.OperationalError as error:
+        if "no such table" in str(error):
+            print("No tasks found") 
 
 def delete_task(task_id):
     con = sqlite3.connect("db.sqlite")
@@ -82,19 +85,23 @@ def get_task_description(task_id):
     return result[0] if result else None
 
 def get_unmark_task():
-    con = sqlite3.connect("db.sqlite")
-    cur = con.cursor()
-    cur.execute('''
-    SELECT id, description FROM tasks WHERE done = 0 ORDER BY date 
-    ''')
-    un_tasks = cur.fetchall()
-    con.close()
-    if not un_tasks:
-        return None
-    table = []
-    for id, desc in un_tasks:
-        table.append([id, desc])
-    return tabulate(table, headers=["ID", "Task"], tablefmt="fancy_grid")
+    try:
+        con = sqlite3.connect("db.sqlite")
+        cur = con.cursor()
+        cur.execute('''
+        SELECT id, description FROM tasks WHERE done = 0 ORDER BY date 
+        ''')
+        un_tasks = cur.fetchall()
+        con.close()
+        if not un_tasks:
+            return None
+        table = []
+        for id, desc in un_tasks:
+            table.append([id, desc])
+        return tabulate(table, headers=["ID", "Task"], tablefmt="fancy_grid")
+    except  sqlite3.OperationalError as error:
+        if "no such table" in str(error):
+            print("No tasks found") 
 
 def edit_task(task_id, new_description):
     con = sqlite3.connect("db.sqlite")

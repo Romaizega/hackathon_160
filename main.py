@@ -120,13 +120,12 @@ def get_user_menu_choise():
                 print("Please eneter a valid task ID")
 
         elif user_input == 8:
-            print("You have unfinished tasks:")
             unmark = get_unmark_task()
             if unmark:
+                print("You have unfinished tasks:")
                 print(unmark)
             else:
                 print("Well done! You did it")
             print("Goodbye")
             break
-        
 get_user_menu_choise()
