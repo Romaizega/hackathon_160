@@ -21,7 +21,7 @@ date_now = datetime.now()
 
 def get_user_menu_choise():
 
-    print(f"Today: {date_now.strftime("%Y-%m-%d %H:%M:%S")}\n")
+    print(f"Today: {date_now.strftime('%Y-%m-%d %H:%M:%S')}\n")
     print ("""=========== TODO LIST ===========
         1. Show the weather 🌦️
         2. Show currency 💱
@@ -34,7 +34,7 @@ def get_user_menu_choise():
     """)
     while True:
         try:
-            user_input = int(input("Please eneter your choice: "))
+            user_input = int(input("Please enter your choice: "))
             if user_input not in range(1, 9):
                 print(" Wrong number, try again")
                 continue
@@ -42,6 +42,7 @@ def get_user_menu_choise():
             print("Please enter a number only")
             print_menu()
             continue
+        
         if user_input == 1:
             get_weather()
             print_menu()
@@ -54,11 +55,11 @@ def get_user_menu_choise():
             get_all_tasks()
             print_menu()
 
-        if user_input == 4:
+        elif user_input == 4:
             new_task = input("Write your new task: ").strip()
             if new_task:
                 add_task(new_task)
-                print(f"Your  task: {new_task} added")
+                print(f"Task added: {new_task}")
                 get_all_tasks()
                 print_menu()
             else:
@@ -97,7 +98,7 @@ def get_user_menu_choise():
                 edit_id = int(input("Write task id to edit the task: "))
                 current_desc = get_task_description(edit_id)
                 if not current_desc:
-                    print("The task not found")
+                    print("Task not found")
                 else:
                     print(f"Current task: {current_desc}")
                     new_text = input("Edit your new task: ").strip()
@@ -105,6 +106,7 @@ def get_user_menu_choise():
                         edit_task(edit_id, new_text)
                         print(f"Task ID {edit_id} updated to: {new_text}")
                         print()
+                        get_all_tasks()
                         print_menu()
                     else:
                         print("Task cannot be empty")
